@@ -31,7 +31,7 @@ Default Applications
 * Categorized menu: morc_menu
 * Browser: firefox
 * File manager: pcmanfm, thunar
-* Image viewer: sxiv
+* Image viewer: viewnior
 * Video Player: mpv; vlc
 * USB Install media creator: etcher
 * Image Manipulation: gimp
@@ -396,12 +396,17 @@ mouse_right_action = close_current
 ```
 ### Rofi
 
-* Replace dmenu:
-```shell
+* Replace dmenu
+    * Symbolic link option:
+    ```ihell
 cd /usr/bin
 sudo mv dmenu dmenu_orig
 ln -s /usr/bin/rofi dmenu
 ```
+    * Alias: Add the following line to .aliasrc
+`command -v rofi > /dev/null && alias dmenu='rofi -dmenu '`
+
+
 * If you prefer the look of dmenu, this approximate it:
 ```shell
 rofi -show run -modi run -location 1 -width 100 \
