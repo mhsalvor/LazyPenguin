@@ -57,6 +57,16 @@ Default Applications
 Post Install Configuration
 --------------------------
 
+### Hostnames
+
+Make sure your /etc/hosts contains the following:
+
+```
+127.0.0.1   localhost.localdomain   localhost   <your hostname>
+127.0.1.1   localhost.localdomain   <your hostname>
+::1         localhost.localdomain   localhost   <your hostname>
+```
+
 ### Package Managers
 
 #### Pacman
@@ -92,6 +102,9 @@ When = PostTransaction
 Exec = /usr/bin/paccache -rk 2
 ```
 
+### Services
+
+* start cups: `systemctl enable org.cups.cups.d.service`
 
 ## Basic Packages
 
@@ -109,9 +122,13 @@ Exec = /usr/bin/paccache -rk 2
     * Copy the license file in the same directory. `C:\Windows\System32\Licenses\neutral\_Default\Core\license.rtf`
     * `makepkg -rsi`
 
-#### Symbol Fonts and icons
-* `yay -S nerd-fonts-complete` All the Nerd patched fonts;
-* `yay -S ttf-all-the-icons` Icon Fonts (fontawesome,material-design-icons, atom file icons, octicons, weather-icons).
+* install mac fonts:
+    * `yay -S ttf-mac-fonts`
+
+* Symbol Fonts and icons
+    * `yay -S nerd-fonts-complete` All the Nerd patched fonts;
+    * `yay -S ttf-all-the-icons` Icon Fonts (fontawesome,material-design-icons, atom file icons, octicons, weather-icons).
+    * pacman -S ttf-font-awesome
 
 #### System Fonts
 
@@ -464,4 +481,31 @@ rofi -dmenu \
         + Config changes:
             - press quit 2 times to quit game;
             - menu toggle start select combo
+
+### Conky
+
+* `sudo pacman -S conky-lua-archers`
+
+### VSCodium
+
+* `sudo pacman -S vscodium`
+
+### Steam
+
+* `sudo pacman -S steam-manjaro steam-native`
+
+### Stacer
+
+* `sudo pacman -S stacer`
+
+### Skype
+
+* `yay -S skypeforlinux-stable-bin`
+
+### Hardcode fixer
+
+* ` yay -S harcode-fixer hardcode-tray`
+    * `sudo hardcode-fixer`
+    * `sudo hardcode-tray`
+
 
