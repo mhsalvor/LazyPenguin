@@ -20,6 +20,8 @@ Default Applications
 * diff replacement: colordiff
 * Quick commands help: tldr++
 * Quotes: fortune-mod
+* AUR helper: paru (pacman>=6)
+* cat : bat
 
 ### GUI
 
@@ -57,7 +59,7 @@ Default Applications
 Post Install Configuration
 --------------------------
 
-### Hostnames
+#### Hostnames
 
 Make sure your /etc/hosts contains the following:
 
@@ -70,7 +72,7 @@ Make sure your /etc/hosts contains the following:
 ### Package Managers
 
 #### Pacman
-
+* Enable colors: uncomment "Color" in `/etc/pamac.conf`
 * Update the system: `sudo pacman -Syu`
 * Remove Orphan packages: `sudo pacman -Rns $(pacman -Qtdq)`
 * Clean pacman and yay caches: `sudo pacman -Scc && yay -Scc`
@@ -138,6 +140,8 @@ Exec = /usr/bin/paccache -rk 2
 
 `pacman -S vlc gst-libav gst-plugins-good`
 
+### System Tray icon fixers:
+`yay -S hardcode-fix hardcode-tray`
 
 ### System Configuration
 
@@ -159,16 +163,16 @@ Uncomment or add `Default !tty_tickets`
 
 Crate the file "/etc/modprobe.d/nobeep.conf" and put the line `blacklist pcspkr` in it:
 
-````shell
+```sh
 sudo echo "blacklist pcspkr" >> /etc/modprobe.d/nobeep.conf
-``````
+```
 
 #### SSD configurations
 
 * Check partitions alignments:
     * The easiest way is to use `parted` so you may want to install it if not already present.
 
-```shell
+```sh
 parted /dev/sdX
 > align-check opt (X)
 ```
@@ -180,7 +184,7 @@ parted /dev/sdX
 
 * Adjust I/O schedulers: `sudo -e /etc/udev/rules.d/60-ioscheduler.rules`
 
-```shell
+```sh
 # set scheduler for NVMe
 ACTION=="add|change", KERNEL=="nvme[0-9]n[0-9]*", AT]TR{queue/scheduler}="none"
 # set scheduler for SSD and eMMC
@@ -195,6 +199,17 @@ ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue
 
 * Fix odd behaviour with "phone" apps:
     * comment out `load-module-role-cork` in `/etc/pulse/default.pa`
+
+#### PipeWire
+
+This commands will switch from pulseaudio to pipewire
+
+* Clean the system:
+`yay -Rs manjaro-pulse pulseaudio pulseaudio-alsa pulseaudio-equalizer pulseaudio-jack pulseaudio-lirc pulseaudio-rtp\
+pulseaudio-zeroconf pulseaudio-bluetooth pa-applet sof-firmware`
+* Install pipewire: `yay -S manjaro-pipewire pipewire-jack-dropin gst-plugin-pipewire pulseeffects pavucontrol pa-applet`
+* Set pipewire buffersize/samplerate:
+ `echo ‘export PIPEWIRE_LATENCY=“128/48000”’ >> ~/.profile`
 
 #### Magic SysRq key
 
@@ -508,4 +523,22 @@ rofi -dmenu \
     * `sudo hardcode-fixer`
     * `sudo hardcode-tray`
 
+### Declutter $HOME
 
+* Move unnecessary files from your home to an appropriate directory
+* check ~/.config/user-dirs.dir, then run `xdg-user-dirs-update`
+* Move files/direcories that can be moved from Home, check archwiki
+* disable less history: `export LESSHISTFILE=-`
+* Files than can be move with some configurations (check archwiki)
+
+### Fusuma - touchpad gestures
+
+`sudo pacman -S ruby`
+`yay -S ruby-fusuma ruby-fusuma-plugin-keypress ruby-fusuma-plugin-sendkey ruby-fusuma-plugin-tap ruby-fusuma-plugin-wmctrl ruby-fusuma-plugin-appmatcher`
+`sudo pacman -S xdotool`
+
+* to update: `sudo gem update fusuma`
+
+* config: ~/.config/fusuma/config.yml
+* NOTE: the configuration is done PER WM, which means I will have multiple config files and futama will be started by the WM
+    with the appropriate config file as an argument.
